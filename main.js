@@ -1,3 +1,8 @@
+/* TODO 
+// Add HTML site icon
+// Add decimal input
+// Add keyboard support
+*/
 let firstNumber = '';
 let secondNumber = '';
 let operator = '';
