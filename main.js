@@ -1,6 +1,3 @@
-/* TODO 
-// Add keyboard support
-*/
 let firstNumber = '';
 let secondNumber = '';
 let operator = '';
@@ -134,6 +131,21 @@ const handleDecimalButton = () => {
     }
 };
 
+const handleKeyDown = (pressedKey) => {
+    console.log(pressedKey.key);
+    if (!isNaN(pressedKey.key)) {
+        populateDisplay(pressedKey.key);
+    } else if (['+', '-', '*', '/', '%'].includes(pressedKey.key)) {
+        populateDisplay(pressedKey.key);
+    } else if ( ['=', 'Enter'].includes(pressedKey.key)) {
+        handleResultButton();
+    } else if (pressedKey.key == 'Backspace') {
+        handleClearLastDigitButton();
+    } else if (['.', ','].includes(pressedKey.key)) {
+        handleDecimalButton();
+    }
+}
+
 document.querySelectorAll('.number-btn,.operator-btn').forEach(element => {
     element.addEventListener('click', () => handleNumberOperatorButton(element.textContent));
 });
@@ -144,3 +156,5 @@ document.querySelector('.clear-last-digit-btn').addEventListener('click', handle
 document.querySelector('.change-sign-btn').addEventListener('click', handleChangeSignButton);
 document.querySelector('.change-color-btn').addEventListener('click', handleChangeColorButton);
 document.querySelector('.decimal-btn').addEventListener('click', handleDecimalButton);
+
+document.addEventListener('keydown', (e) => handleKeyDown(e));
