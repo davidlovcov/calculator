@@ -1,6 +1,4 @@
 /* TODO 
-// Add HTML site icon
-// Add decimal input
 // Add keyboard support
 */
 let firstNumber = '';
@@ -65,6 +63,10 @@ const populateDisplay = (input) => {
     }
 };
 
+const handleNumberOperatorButton = (input) => {
+    populateDisplay(input);
+};
+
 const handleResultButton = () => {
     if (firstNumber && secondNumber && operator) {
         firstNumber = operate(firstNumber, secondNumber, operator);
@@ -117,17 +119,28 @@ const handleChangeColorButton = () => {
     });
 };
 
-document.querySelectorAll('.number-btn').forEach(element => {
-    element.addEventListener('click', () => populateDisplay(element.textContent));
-});
+const handleDecimalButton = () => {
+    if (firstNumber && operator) {
+        if (!secondNumber.includes('.')) {
+            secondNumber = secondNumber.concat('', '.');
+            displayText.textContent = displayText.textContent.concat('', '.');
+        }
+        console.log('it worked')
+    } else if (firstNumber && !operator) {
+        if (!firstNumber.includes('.')) {
+            firstNumber = firstNumber.concat('', '.');
+            displayText.textContent = displayText.textContent.concat('', '.')
+        }
+    }
+};
 
-document.querySelectorAll('.operator-btn').forEach(element => {
-    element.addEventListener('click', () => populateDisplay(element.textContent));
+document.querySelectorAll('.number-btn,.operator-btn').forEach(element => {
+    element.addEventListener('click', () => handleNumberOperatorButton(element.textContent));
 });
 
 document.querySelector('.result-btn').addEventListener('click', handleResultButton);
 document.querySelector('.clear-all-btn').addEventListener('click', handleClearAllButton);
 document.querySelector('.clear-last-digit-btn').addEventListener('click', handleClearLastDigitButton);
 document.querySelector('.change-sign-btn').addEventListener('click', handleChangeSignButton);
-
 document.querySelector('.change-color-btn').addEventListener('click', handleChangeColorButton);
+document.querySelector('.decimal-btn').addEventListener('click', handleDecimalButton);
