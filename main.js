@@ -143,6 +143,8 @@ const handleKeyDown = (pressedKey) => {
         handleClearLastDigitButton();
     } else if (['.', ','].includes(pressedKey.key)) {
         handleDecimalButton();
+    } else if (pressedKey.key.toLowerCase() == 'c') {
+        handleClearAllButton();
     }
 }
 
