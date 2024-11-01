@@ -5,55 +5,39 @@ let operator = '';
 const displayText = document.querySelector('.display');
 displayText.textContent = '0';
 
-const add = (firstNumber, secondNumber) => {
-    return firstNumber + secondNumber;
-};
-
-const subtract = (firstNumber, secondNumber) => {
-    return firstNumber - secondNumber;
-};
-
-const multiply = (firstNumber, secondNumber) => {
-    return firstNumber * secondNumber;
-};
-
-const divide = (firstNumber, secondNumber) => {
-    if (secondNumber == 0) {
-        return "Error";
-    } else {
-        return firstNumber / secondNumber;
-    }
-};
-
-const modulo = (firstNumber, secondNumber) => {
-    return firstNumber % secondNumber;
-};
+const add = (a, b) => a + b;
+const subtract = (a, b) => a - b;
+const multiply = (a, b) => a * b;
+const divide = (a, b) => (b === 0 ? "Error" : a / b);
+const modulo = (a, b) => a % b;
 
 const operate = (firstNumber, secondNumber, operator) => {
-    firstNumber = parseFloat(firstNumber);
-    secondNumber = parseFloat(secondNumber);
-
-    if (operator == '+') {
-        return add(firstNumber, secondNumber);
-    } else if (operator == '-') {
-        return subtract(firstNumber, secondNumber);
-    } else if (operator == 'x') {
-        return multiply(firstNumber, secondNumber);
-    } else if (operator == '÷') {
-        return divide(firstNumber, secondNumber);
-    } else if (operator == '%') {
-        return modulo(firstNumber, secondNumber);
+    const a = parseFloat(firstNumber);
+    const b = parseFloat(secondNumber);
+    
+    switch (operator) {
+        case '+': return add(a, b).toString();
+        case '-': return subtract(a, b).toString();
+        case 'x': return multiply(a, b).toString();
+        case '÷': return divide(a, b).toString();
+        case '%': return modulo(a, b).toString();
+        default: return '';
     }
 };
 
-const isNumber = (number) => {
-    const numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-    return numbers.includes(number);
+const isNumber = (input) => !isNaN(input);
+
+const checkDecimals = (number) => {
+    if (number.includes('.') && number.split('.')[1].length > 6) {
+        return parseFloat(number).toFixed(6).toString();
+    } else {
+        return number;
+    }
 };
 
 const populateDisplay = (input) => {
     if (isNumber(input)) {
-        if (operator == '') {
+        if (!operator) {
             displayText.textContent == '0' || displayText.textContent == "Error" ? displayText.textContent = input : displayText.textContent += input;
             firstNumber += input;
         } else {
@@ -61,15 +45,15 @@ const populateDisplay = (input) => {
             displayText.textContent += input;
         }
     } else {
-        if (operator == '') {
+        if (!operator) {
             operator = input;
-            displayText.textContent += ' ' + input + ' ';
-        } else if (operator != '' && secondNumber == '') {
+            displayText.textContent += ` ${input} `;
+        } else if (operator && !secondNumber) {
             operator = input;
-            displayText.textContent = displayText.textContent.slice(0, -2) + operator + ' ';
+            displayText.textContent = displayText.textContent.slice(0, -2) + ` ${operator} `;
         } else {
-            displayText.textContent = operate(firstNumber, secondNumber, operator) + ' ' + input + ' ';
-            firstNumber = displayText.textContent;
+            firstNumber = operate(firstNumber, secondNumber, operator);
+            displayText.textContent = checkDecimals(firstNumber) + ` ${input} `;
             secondNumber = '';
             operator = input;
         }
@@ -77,9 +61,9 @@ const populateDisplay = (input) => {
 };
 
 const handleResultButton = () => {
-    if (firstNumber != '' && secondNumber != '' && operator != '') {
-        displayText.textContent = operate(firstNumber, secondNumber, operator);
-        firstNumber = displayText.textContent;
+    if (firstNumber && secondNumber && operator) {
+        firstNumber = operate(firstNumber, secondNumber, operator);
+        displayText.textContent = checkDecimals(firstNumber);
         secondNumber = '';
         operator = '';
     }
@@ -93,12 +77,11 @@ const handleClearAllButton = () => {
 };
 
 const handleClearLastDigitButton = () => {
-    displayText.textContent = displayText.textContent.slice(0, -1) + '';
-    if (operator != '' && secondNumber != '') {
+    if (secondNumber) {
         secondNumber = secondNumber.slice(0, -1) + '';
-    } else if (operator != '' && secondNumber == ''){
+    } else if (operator){
         operator = '';
-        displayText.textContent = displayText.textContent.slice(0, -2) + '';
+        displayText.textContent = displayText.textContent.slice(0, -3);
     } else {
         firstNumber = firstNumber.slice(0, -1) + '';
     }
@@ -108,21 +91,14 @@ const handleClearLastDigitButton = () => {
     }
 };
 
-const numberButtons = document.querySelectorAll('.number-btn');
-numberButtons.forEach(element => {
+document.querySelectorAll('.number-btn').forEach(element => {
     element.addEventListener('click', () => populateDisplay(element.textContent));
 });
 
-const operatorButtons = document.querySelectorAll('.operator-btn');
-operatorButtons.forEach(element => {
+document.querySelectorAll('.operator-btn').forEach(element => {
     element.addEventListener('click', () => populateDisplay(element.textContent));
 });
 
-const resultButton = document.querySelector('.result-btn');
-resultButton.addEventListener('click', handleResultButton);
-
-const clearAllButton = document.querySelector('.clear-all-btn');
-clearAllButton.addEventListener('click', handleClearAllButton);
-
-const clearLastDigitButton = document.querySelector('.clear-last-digit-btn');
-clearLastDigitButton.addEventListener('click', handleClearLastDigitButton);
+document.querySelector('.result-btn').addEventListener('click', handleResultButton);
+document.querySelector('.clear-all-btn').addEventListener('click', handleClearAllButton);
+document.querySelector('.clear-last-digit-btn').addEventListener('click', handleClearLastDigitButton);
