@@ -120,6 +120,12 @@ button {
         font-size: 24px;
     }
 
+    .wrapper > button:active {
+        width: 45px;
+        height: 45px;
+        font-size: 22px;
+    }
+
     .display {
         font-size: 38px;
         margin-bottom: 5px;
