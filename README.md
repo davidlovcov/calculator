@@ -63,11 +63,11 @@ Or, if you have a live server extension in your code editor, you can run the pro
 
 ## Screenshots
 
-<!-- Replace with a real screenshot URL -->
+<img src="images/image.png" alt="Description of image" width="252px" height="403px">
 
 ## Project Status
 
-The project is currently work in progress<!-- complete but may receive future updates for additional features and improvements. -->
+The project is complete but may receive future updates for additional features and improvements.
 
 ## Acknowledgments
 
