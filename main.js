@@ -79,15 +79,29 @@ const handleClearAllButton = () => {
 const handleClearLastDigitButton = () => {
     if (secondNumber) {
         secondNumber = secondNumber.slice(0, -1) + '';
+        displayText.textContent = displayText.textContent.slice(0, -1);
     } else if (operator){
         operator = '';
         displayText.textContent = displayText.textContent.slice(0, -3);
     } else {
         firstNumber = firstNumber.slice(0, -1) + '';
+        displayText.textContent = displayText.textContent.slice(0, -1);
     }
 
     if (displayText.textContent == '') {
         displayText.textContent = '0';
+    }
+};
+
+const handleChangeSignButton = () => {
+    if (secondNumber && operator) {
+        secondNumber = (-parseFloat(secondNumber)).toString();
+
+        displayText.textContent = `${firstNumber} ${operator} ${secondNumber}`;
+    } else if (firstNumber && !operator) {
+        firstNumber = (-parseFloat(firstNumber)).toString();
+
+        displayText.textContent = firstNumber;
     }
 };
 
@@ -102,3 +116,4 @@ document.querySelectorAll('.operator-btn').forEach(element => {
 document.querySelector('.result-btn').addEventListener('click', handleResultButton);
 document.querySelector('.clear-all-btn').addEventListener('click', handleClearAllButton);
 document.querySelector('.clear-last-digit-btn').addEventListener('click', handleClearLastDigitButton);
+document.querySelector('.change-sign-btn').addEventListener('click', handleChangeSignButton);
