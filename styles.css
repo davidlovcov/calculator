@@ -11,8 +11,8 @@ html {
 
 body {
     display: flex;
-    justify-content: center;
-    
+    flex-direction: column;
+    align-items: center;
     width: 100%;
     height: 100%;
     padding: auto;
@@ -28,11 +28,11 @@ button {
     border: none;
 }
 
-button:hover {
+.wrapper > button:hover {
     filter: invert(30%)
 }
 
-button:active {
+.wrapper > button:active {
     width: 75px;
     height: 75px;
     font-size: 40px;
@@ -87,4 +87,22 @@ button:active {
     justify-content: center;
     width: 90px;
     height: 90px;
+}
+
+.change-color-btn {
+    font-size: 24px;
+    font-weight: bold;
+    background-color: rgb(241, 197, 205);
+    margin: 10px;
+    border-radius: 5px;
+    width: 200px;
+    height: 50px;
+}
+
+.change-color-btn:hover {
+    filter: brightness(80%);
+}
+
+.change-color-btn:active {
+    filter: brightness(70%);
 }

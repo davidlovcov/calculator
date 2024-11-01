@@ -105,6 +105,13 @@ const handleChangeSignButton = () => {
     }
 };
 
+const handleChangeColorButton = () => {
+    document.querySelector('.calculator').style.backgroundColor = 'pink';
+    document.querySelectorAll('button').forEach((element) => {
+        element.style.backgroundColor = 'rgb(247, 158, 172)';
+    });
+};
+
 document.querySelectorAll('.number-btn').forEach(element => {
     element.addEventListener('click', () => populateDisplay(element.textContent));
 });
@@ -117,3 +124,5 @@ document.querySelector('.result-btn').addEventListener('click', handleResultButt
 document.querySelector('.clear-all-btn').addEventListener('click', handleClearAllButton);
 document.querySelector('.clear-last-digit-btn').addEventListener('click', handleClearLastDigitButton);
 document.querySelector('.change-sign-btn').addEventListener('click', handleChangeSignButton);
+
+document.querySelector('.change-color-btn').addEventListener('click', handleChangeColorButton);
